@@ -72,7 +72,7 @@ gameLibrary()
         endResult+="TestFull.txt"
     else
         endEcho+=", Non-Test"
-        endResult+="Test.txt"
+        endResult+="Full.txt"
     fi
 
     # Verbose
