@@ -1,7 +1,7 @@
 #ifndef NordicArts_Valkyrie_GameStart_H
 #define NordicArts_Valkyrie_GameStart_H
 
-#include <Valkyrie/Valkyrie.hpp>
+#include <Game/Game.hpp>
 
 #include <NordicEngine/Window/Layer.hpp>
 #include <NordicEngine/Logger/Logger.hpp>
