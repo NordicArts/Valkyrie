@@ -75,6 +75,8 @@ gameLibrary()
         endResult+="Full.txt"
     fi
 
+    endResult+=" ."
+
     # Verbose
     if [[ $beLoud == 1 ]]; then
         endEcho+=", Verbose"

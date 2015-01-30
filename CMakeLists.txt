@@ -3,13 +3,13 @@ cmake_minimum_required(VERSION 2.8)
 include(CMakeDependentOption)
 
 # Project Name
-project(Game)
+project(GameLibrary)
 
 # OSX
 set(CMAKE_MACOSX_RPATH 0)
 
 # CMake Modules
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeConfigs)
 
 # CMake Flags
 if (WIN32)
@@ -56,9 +56,9 @@ include_directories(${NordicEngine_Path})
 link_directories(${NordicEngine_Path})
 
 # Generate Library
-add_library(Game SHARED ${LibSources} ${LibHeaders})
-set_target_properties(Game PROPERTIES LINKER_LANGUAGE CXX)
-set_target_properties(Gamee PROPERTIES OUTPUT_NAME "Game")
+add_library(GameLibrary SHARED ${LibSources} ${LibHeaders})
+set_target_properties(GameLibrary PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(GameLibrary PROPERTIES OUTPUT_NAME "Game")
 
 # Link
-target_link_libraries(Game NordicEngine)
+target_link_libraries(GameLibrary NordicEngine)
