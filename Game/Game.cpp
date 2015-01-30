@@ -17,9 +17,9 @@ namespace NordicArts {
             }
         }
 
-        int Main() {
+        int Main(std:string cGameName) {
             try {   
-                NordicEngine::Logger  oLogger("Valkyrie");
+                NordicEngine::Logger  oLogger(cGameName);
                 NordicEngine::Logger *pLogger = &oLogger;
 
                 NordicEngine::Window::Layer  oWindow(pLogger);

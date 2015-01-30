@@ -3,7 +3,7 @@
 
 #include <Game/Game.hpp>
 
-#include <NordicEngine/Window/Layer.hpp>
+#include <NordicEngine/Window/Window.hpp>
 #include <NordicEngine/Logger/Logger.hpp>
 
 namespace NordicArts {
@@ -13,7 +13,7 @@ namespace NordicArts {
         public:
         protected:
         private:
-            NordicEngine::Window::Layer *m_pWindowManager;
+            NordicEngine::WindowMaker::Window *m_pWindowManager;
             NordicEngine::Logger *m_pLogger;
 
         // Methods
@@ -25,9 +25,9 @@ namespace NordicArts {
 
             int startGame();
 
-            NordicEngine::Window::Layer *getWindowManager();
+            NordicEngine::WindowMaker::Window *getWindowManager();
 
-            void setWindowManager(NordicEngine::Window::Layer *pLayer);
+            void setWindowManager(NordicEngine::WindowMaker::Window *pLayer);
             void initalize();
             void gameLoop();
             void destroy();

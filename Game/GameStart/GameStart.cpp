@@ -17,11 +17,11 @@ namespace NordicArts {
             destroy();
         }
 
-        NordicEngine::Window::Layer *GameStart::getWindowManager() {
+        NordicEngine::WindowMaker::Window *GameStart::getWindowManager() {
             return m_pWindowManager;
         }
         
-        void GameStart::setWindowManager(NordicEngine::Window::Layer *pManager) {
+        void GameStart::setWindowManager(NordicEngine::WindowMaker::Window *pManager) {
             m_pWindowManager = pManager;
         }
 

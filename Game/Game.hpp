@@ -7,7 +7,7 @@ namespace NordicArts {
     namespace Game {
         void handleException(std::exception_ptr oException);
 
-        int Main();
+        int Main(std::string cGameName);
     };
 };
 
