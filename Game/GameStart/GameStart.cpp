@@ -25,6 +25,7 @@ namespace NordicArts {
             m_pWindowManager = pManager;
         }
 
+        // Start the game itself
         int GameStart::startGame() {
             initalize();
             gameLoop();
@@ -55,15 +56,11 @@ namespace NordicArts {
 
         void GameStart::destroy() {
             g_Triangle.destroy();
-
+            
             if (m_pWindowManager) {
                 m_pWindowManager->destroy();
 
                 SAFE_DELETE(m_pWindowManager);
-            }
-
-            if (m_pLogger) {
-                SAFE_DELETE(m_pLogger);
             }
         }
     };

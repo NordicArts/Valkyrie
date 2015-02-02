@@ -3,7 +3,7 @@
 
 #include <NordicEngine/Engine.hpp>
 #include <NordicEngine/Logger/Logger.hpp>
-#include <NordicEngine/Window/Layer.hpp>
+#include <NordicEngine/Window/Window.hpp>
 
 namespace NordicArts {
     namespace Game {
@@ -17,18 +17,22 @@ namespace NordicArts {
             }
         }
 
-        int Main(std:string cGameName) {
+        int Main(std::string cGameName) {
             try {   
                 NordicEngine::Logger  oLogger(cGameName);
                 NordicEngine::Logger *pLogger = &oLogger;
 
-                NordicEngine::Window::Layer  oWindow(pLogger);
-                NordicEngine::Window::Layer *pWindow = &oWindow;
+                NordicEngine::WindowMaker::Window  oWindow(pLogger);
+                NordicEngine::WindowMaker::Window *pWindow = &oWindow;
 
                 GameStart oGame(pLogger);
                 oGame.setWindowManager(pWindow);
 
-                return oGame.startGame();
+                int iReturn = oGame.startGame();
+
+                pLogger->destroy();
+
+                return iReturn;
             } catch (std::exception &oException) {
                 throw NordicEngine::Exception(oException.what());
             } catch (NordicEngine::Exception &oException) {

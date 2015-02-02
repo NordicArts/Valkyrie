@@ -18,6 +18,7 @@ OPTIONS:
     -v  Verbose
     -p  Pull, pulls the latest code and all its gitmodules
     -t  Test Build, once built run the unit tests
+    -n  No Clean
 EOF
 }
 
@@ -128,15 +129,19 @@ VERBOSE=false
 TEST=false
 PULL=false
 MAKER=false
+CLEAN=1
 
 # Go through the options
-while getopts ":o:g:?phvt" OPTION; do
+while getopts ":o:g:?phvnt" OPTION; do
     case $OPTION in
         o)
             OPT=$OPTARG
             ;;
         t)
             TEST=1
+            ;;
+        n)
+            CLEAN=false
             ;;
         p)
             PULL=1
@@ -165,11 +170,15 @@ fi
 
 # Build Standard
 if [[ $OPT == "build" ]]; then
-    ./cleaner.sh -t build
+    if [[ $CLEAN == 1 ]]; then
+        ./cleaner.sh -t build
+    fi
 
     gameLibrary $VERBOSE $TEST
 
-    ./cleaner.sh -t cmake
+    if [[ $CLEAN == 1 ]]; then
+        ./cleaner.sh -t cmake
+    fi
 fi
 
 # Run the tests if its supposed to
