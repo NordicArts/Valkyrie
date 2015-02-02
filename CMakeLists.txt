@@ -45,8 +45,7 @@ link_directories(${GP}/GameStart)
 list(APPEND LibHeaders ${GP}/GameStart/GameStart.hpp)
 list(APPEND LibSources ${GP}/GameStart/GameStart.cpp)
 
-#string(TIMESTAMP buildNumber "9%j%y%H%M")
-#file(WRITE ${GP}/buildNumber.hpp "#ifndef GAME_BUILDNUMBER\n#define GAME_BUILDNUMBER ${buildNumber}\n#endif")
+# Build Number
 list(APPEND LibHeaders ${GP}/buildNumber.hpp)
 
 # NordicEngine
