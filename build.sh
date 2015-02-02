@@ -19,6 +19,7 @@ OPTIONS:
     -p  Pull, pulls the latest code and all its gitmodules
     -t  Test Build, once built run the unit tests
     -n  No Clean
+    -g  Game Name
 EOF
 }
 
@@ -55,6 +56,42 @@ pullCode()
         git submodule init >> /dev/null
         git submodule update --recursive >> /dev/null
         git submodule foreach git pull origin master --recurse-submodules >> /dev/null
+    fi
+}
+
+# Build Number
+buildNumber()
+{
+    buildName=$1
+    beLoud=$2
+
+    # Text file
+    if [[ $beLoud == 1 ]]; then
+        echo "awk -F, '{$1=$1+1}1' OFS= buildNumber.txt > buildNumberNew.txt && mv buildNumberNew.txt buildNumber.txt"
+    fi
+
+    awk -F, '{$1=$1+1}1' OFS= buildNumber.txt > buildNumberNew.txt && mv buildNumberNew.txt buildNumber.txt
+
+    # Get the result
+    buildNumber=$(cat buildNumber.txt)
+
+    # Build the header
+    l1="#ifndef NORDICARTS_"
+    l1+=$buildName
+    l1+="_BUILDNUMBER"
+
+    l2="#define NORDICARTS_"
+    l2+=$buildName
+    l2+="_BUILDNUMBER "
+    l2+=$buildNumber
+    l3="#endif"
+
+    echo -e $l1 > $buildName/buildNumber.hpp
+    echo -e $l2 >> $buildName/buildNumber.hpp
+    echo -e $l3 >> $buildName/buildNumber.hpp
+
+    if [[ $beLoud == 1 ]]; then
+        echo $l2
     fi
 }
 
@@ -130,6 +167,7 @@ TEST=false
 PULL=false
 MAKER=false
 CLEAN=1
+GAMENAME="Game"
 
 # Go through the options
 while getopts ":o:g:?phvnt" OPTION; do
@@ -153,6 +191,9 @@ while getopts ":o:g:?phvnt" OPTION; do
         v)
             VERBOSE=1
             ;;
+        g)
+            GAMENAME=$OPTARG
+            ;;
         ?)
             usage
             exit
@@ -174,6 +215,7 @@ if [[ $OPT == "build" ]]; then
         ./cleaner.sh -t build
     fi
 
+    buildNumber $GAMENAME $VERBOSE
     gameLibrary $VERBOSE $TEST
 
     if [[ $CLEAN == 1 ]]; then
