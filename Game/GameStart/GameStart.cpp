@@ -39,12 +39,14 @@ namespace NordicArts {
                 exit(-1);
             }
 
-            NordicEngine::Render::Models::Manager oManager;
+            NordicEngine::Render::Models::Manager oManager(m_pLogger);
 
-            g_Triangle = oManager.addModel("triangle", "GameFiles/Models/Triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            g_Triangle = oManager.addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
+            m_pLogger->log("Started Game Loop");
+
             while (m_pWindowManager->processInput(true)) {
                 glClear(GL_COLOR_BUFFER_BIT);
 
@@ -52,6 +54,8 @@ namespace NordicArts {
 
                 m_pWindowManager->swapBuffers();
             }
+
+            if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
         }
 
         void GameStart::destroy() {

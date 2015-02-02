@@ -26,7 +26,7 @@ namespace NordicArts {
                 NordicEngine::Settings  oSettings(pLogger, cGameName);
                 NordicEngine::Settings *pSettings = &oSettings;
                 pSettings->setup();
-                pSettings->setOpenGLVerbose(4, 4);
+                pSettings->setOpenGLVerbose(4, 1);
 
                 NordicEngine::WindowMaker::Window  oWindow(pLogger, pSettings);
                 NordicEngine::WindowMaker::Window *pWindow = &oWindow;
