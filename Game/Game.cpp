@@ -4,6 +4,7 @@
 #include <NordicEngine/Engine.hpp>
 #include <NordicEngine/Logger/Logger.hpp>
 #include <NordicEngine/Window/Window.hpp>
+#include <NordicEngine/Settings/Settings.hpp>
 
 namespace NordicArts {
     namespace Game {
@@ -22,7 +23,12 @@ namespace NordicArts {
                 NordicEngine::Logger  oLogger(cGameName);
                 NordicEngine::Logger *pLogger = &oLogger;
 
-                NordicEngine::WindowMaker::Window  oWindow(pLogger);
+                NordicEngine::Settings  oSettings(pLogger, cGameName);
+                NordicEngine::Settings *pSettings = &oSettings;
+                pSettings->setup();
+                pSettings->setOpenGLVerbose(4, 4);
+
+                NordicEngine::WindowMaker::Window  oWindow(pLogger, pSettings);
                 NordicEngine::WindowMaker::Window *pWindow = &oWindow;
 
                 GameStart oGame(pLogger);
