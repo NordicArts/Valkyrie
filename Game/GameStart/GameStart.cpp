@@ -36,7 +36,7 @@ namespace NordicArts {
 
         void GameStart::initalize() {
             if (!m_pWindowManager || (m_pWindowManager->initalize(1024, 768, "Valkyrie", false) != 0)) {
-                exit(-1);
+                return;
             }
 
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
@@ -47,25 +47,23 @@ namespace NordicArts {
         void GameStart::gameLoop() {
             m_pLogger->log("Started Game Loop");
 
-            while (m_pWindowManager->processInput(true)) {
-                glClear(GL_COLOR_BUFFER_BIT);
+            if (m_pWindowManager) {
+                while (m_pWindowManager->processInput(true)) {
+                    glClear(GL_COLOR_BUFFER_BIT);
+    
+                    g_Triangle.render();
+    
+                    m_pWindowManager->swapBuffers();
+                }
 
-                g_Triangle.render();
-
-                m_pWindowManager->swapBuffers();
+                if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
             }
-
-            if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
         }
 
         void GameStart::destroy() {
             g_Triangle.destroy();
             
-            if (m_pWindowManager) {
-                m_pWindowManager->destroy();
-
-                SAFE_DELETE(m_pWindowManager);
-            }
+            m_pWindowManager->destroy();
         }
     };
 };

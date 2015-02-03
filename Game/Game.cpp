@@ -19,10 +19,10 @@ namespace NordicArts {
         }
 
         int Main(std::string cGameName) {
-            try {   
-                NordicEngine::Logger  oLogger(cGameName);
-                NordicEngine::Logger *pLogger = &oLogger;
+            NordicEngine::Logger  oLogger(cGameName);
+            NordicEngine::Logger *pLogger = &oLogger;
 
+            try {   
                 NordicEngine::Settings  oSettings(pLogger, cGameName);
                 NordicEngine::Settings *pSettings = &oSettings;
                 pSettings->setup();
@@ -34,15 +34,11 @@ namespace NordicArts {
                 GameStart oGame(pLogger);
                 oGame.setWindowManager(pWindow);
 
-                int iReturn = oGame.startGame();
-
-                pLogger->destroy();
-
-                return iReturn;
+                return oGame.startGame();
             } catch (std::exception &oException) {
                 throw NordicEngine::Exception(oException.what());
             } catch (NordicEngine::Exception &oException) {
-                printIt(oException.what());
+                pLogger->log(oException.what());
             } catch ( ... ) {
                 handleException(std::current_exception());
             }
