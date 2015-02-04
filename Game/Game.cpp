@@ -31,7 +31,7 @@ namespace NordicArts {
                 NordicEngine::WindowMaker::Window  oWindow(pLogger, pSettings);
                 NordicEngine::WindowMaker::Window *pWindow = &oWindow;
 
-                GameStart oGame(pLogger);
+                GameStart oGame(pSettings, pLogger);
                 oGame.setWindowManager(pWindow);
 
                 return oGame.startGame();

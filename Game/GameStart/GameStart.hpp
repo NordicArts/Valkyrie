@@ -5,6 +5,8 @@
 
 #include <NordicEngine/Window/Window.hpp>
 #include <NordicEngine/Logger/Logger.hpp>
+#include <NordicEngine/Render/Models/Manager.hpp>
+#include <NordicEngine/Settings/Settings.hpp>
 
 namespace NordicArts {
     namespace Game {
@@ -13,13 +15,15 @@ namespace NordicArts {
         public:
         protected:
         private:
-            NordicEngine::WindowMaker::Window *m_pWindowManager;
-            NordicEngine::Logger *m_pLogger;
+            NordicEngine::Render::Models::Manager   *m_pModelManager;
+            NordicEngine::WindowMaker::Window       *m_pWindowManager;
+            NordicEngine::Logger                    *m_pLogger;
+            NordicEngine::Settings                  *m_pSettings;
 
         // Methods
         public:
             GameStart();
-            GameStart(NordicEngine::Logger *pLogger);
+            GameStart(NordicEngine::Settings *pSettings, NordicEngine::Logger *pLogger);
             
             ~GameStart();
 

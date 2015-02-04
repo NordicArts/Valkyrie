@@ -1,16 +1,13 @@
 #include <Game/GameStart/GameStart.hpp>
 
 #include <NordicEngine/Render/Models/Model.hpp>
-#include <NordicEngine/Render/Models/Manager.hpp>
 #include <NordicEngine/ThirdParty/glm/glm/glm.hpp>
 
 namespace NordicArts {
     namespace Game {
-        NordicEngine::Render::Models::Model g_Triangle;
-
         GameStart::GameStart() {
         }
-        GameStart::GameStart(NordicEngine::Logger *pLogger) : m_pLogger(pLogger) {
+        GameStart::GameStart(NordicEngine::Settings *pSettings, NordicEngine::Logger *pLogger) : m_pSettings(pSettings), m_pLogger(pLogger) {
         }
 
         GameStart::~GameStart() {
@@ -35,13 +32,20 @@ namespace NordicArts {
         }
 
         void GameStart::initalize() {
-            if (!m_pWindowManager || (m_pWindowManager->initalize(1024, 768, "Valkyrie", false) != 0)) {
-                return;
+            if (m_pSettings) {
+                if (!m_pWindowManager || (m_pWindowManager->initalize(m_pSettings->getResolutionWidth(), m_pSettings->getResolutionHeight(), m_pSettings->getGameName(), m_pSettings->isWindowed()) != 0)) {
+                    return;
+                }
+            } else {
+                if (!m_pWindowManager || (m_pWindowManager->initalize(1024, 768, "Valkyrie", false) != 0)) {
+                    return;
+                }
             }
 
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
+            m_pModelManager = &oManager;
 
-            g_Triangle = oManager.addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            m_pModelManager->addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
@@ -50,13 +54,13 @@ namespace NordicArts {
             if (m_pWindowManager) {
                 if (m_pLogger) { m_pLogger->log("Started GameLoop Render"); }
 
-                while (m_pWindowManager->processInput(true)) {
-                    glClear(GL_COLOR_BUFFER_BIT);
-                    if (m_pLogger) { m_pLogger->log("Cleared Start Triangle"); }
-    
-                    g_Triangle.render();
+                NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
 
-                    if (m_pLogger) { m_pLogger->log("Cleared Swap Buffers"); }
+                while (m_pWindowManager->processInput(true)) {
+                    m_pWindowManager->clearWindow();
+
+                    pTriangle->render();
+
                     m_pWindowManager->swapBuffers();
                 }
 
@@ -67,8 +71,6 @@ namespace NordicArts {
         }
 
         void GameStart::destroy() {
-            g_Triangle.destroy();
-            
             m_pWindowManager->destroy();
         }
     };
