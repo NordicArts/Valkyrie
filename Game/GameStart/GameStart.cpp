@@ -45,19 +45,25 @@ namespace NordicArts {
         }
 
         void GameStart::gameLoop() {
-            m_pLogger->log("Started Game Loop");
+            if (m_pLogger) { m_pLogger->log("Started Game Loop"); }
 
             if (m_pWindowManager) {
+                if (m_pLogger) { m_pLogger->log("Started GameLoop Render"); }
+
                 while (m_pWindowManager->processInput(true)) {
                     glClear(GL_COLOR_BUFFER_BIT);
+                    if (m_pLogger) { m_pLogger->log("Cleared Start Triangle"); }
     
                     g_Triangle.render();
-    
+
+                    if (m_pLogger) { m_pLogger->log("Cleared Swap Buffers"); }
                     m_pWindowManager->swapBuffers();
                 }
 
-                if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
+                if (m_pLogger) { m_pLogger->log("Ended GameLoop Render"); }
             }
+
+            if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
         }
 
         void GameStart::destroy() {
