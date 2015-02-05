@@ -42,6 +42,9 @@ namespace NordicArts {
                 }
             }
 
+            // Hide the cursor
+            m_pWindowManager->setCursorDisabled();
+
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
