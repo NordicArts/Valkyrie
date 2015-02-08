@@ -1,6 +1,8 @@
 #include <Game/GameStart/GameStart.hpp>
 
 #include <NordicEngine/Render/Models/Model.hpp>
+#include <NordicEngine/Color/Color.hpp>
+
 #include <NordicEngine/ThirdParty/glm/glm/glm.hpp>
 
 namespace NordicArts {
@@ -45,15 +47,21 @@ namespace NordicArts {
             // Hide the cursor
             m_pWindowManager->setCursorDisabled();
 
+            // Clear Color
+            //m_pWindowManager->clearColor(NordicEngine::Color::Blue);
+
+            // Set Depth tests
+            //m_pWindowManager->depthAndCull();
+
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
-            m_pModelManager->addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            m_pModelManager->addModel("dragon", "GameFiles/Models/dragon.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
             if (m_pWindowManager) {
-                NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
+                NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("dragon");
                 pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
