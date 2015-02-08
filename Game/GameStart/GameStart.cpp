@@ -52,12 +52,9 @@ namespace NordicArts {
         }
 
         void GameStart::gameLoop() {
-            if (m_pLogger) { m_pLogger->log("Started Game Loop"); }
-
             if (m_pWindowManager) {
-                if (m_pLogger) { m_pLogger->log("Started GameLoop Render"); }
-
                 NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
+                pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
                     m_pWindowManager->clearWindow();
@@ -66,11 +63,7 @@ namespace NordicArts {
 
                     m_pWindowManager->swapBuffers();
                 }
-
-                if (m_pLogger) { m_pLogger->log("Ended GameLoop Render"); }
             }
-
-            if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
         }
 
         void GameStart::destroy() {
