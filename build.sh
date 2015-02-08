@@ -66,10 +66,6 @@ buildNumber()
     beLoud=$2
 
     # Text file
-    if [[ $beLoud == 1 ]]; then
-        echo "awk -F, '{$1=$1+1}1' OFS= buildNumber.txt > buildNumberNew.txt && mv buildNumberNew.txt buildNumber.txt"
-    fi
-
     awk -F, '{$1=$1+1}1' OFS= buildNumber.txt > buildNumberNew.txt && mv buildNumberNew.txt buildNumber.txt
 
     # Get the result
@@ -89,10 +85,6 @@ buildNumber()
     echo -e $l1 > $buildName/buildNumber.hpp
     echo -e $l2 >> $buildName/buildNumber.hpp
     echo -e $l3 >> $buildName/buildNumber.hpp
-
-    if [[ $beLoud == 1 ]]; then
-        echo $l2
-    fi
 }
 
 # Game Library

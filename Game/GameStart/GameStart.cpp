@@ -1,6 +1,8 @@
 #include <Game/GameStart/GameStart.hpp>
 
 #include <NordicEngine/Render/Models/Model.hpp>
+#include <NordicEngine/Color/Color.hpp>
+
 #include <NordicEngine/ThirdParty/glm/glm/glm.hpp>
 
 namespace NordicArts {
@@ -42,6 +44,19 @@ namespace NordicArts {
                 }
             }
 
+            // Render
+            NordicEngine::Render::Manager oRender(m_pLogger);
+            m_pRender = &oRender;
+
+            // Hide the cursor
+            m_pWindowManager->setCursorDisabled();
+
+            // Clear Color
+            m_pRender->clearColor(NordicEngine::Color::Blue);
+
+            // Set Depth tests
+            m_pRender->depthAndCull();
+
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
@@ -49,28 +64,23 @@ namespace NordicArts {
         }
 
         void GameStart::gameLoop() {
-            if (m_pLogger) { m_pLogger->log("Started Game Loop"); }
-
             if (m_pWindowManager) {
-                if (m_pLogger) { m_pLogger->log("Started GameLoop Render"); }
-
                 NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
+                pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
-                    m_pWindowManager->clearWindow();
+                    m_pRender->clear();
 
                     pTriangle->render();
+                    //m_pModelManager->renderAll();
 
                     m_pWindowManager->swapBuffers();
                 }
-
-                if (m_pLogger) { m_pLogger->log("Ended GameLoop Render"); }
             }
-
-            if (m_pLogger) { m_pLogger->log("Ended Game Loop"); }
         }
 
         void GameStart::destroy() {
+            m_pRender->destroy();
             m_pWindowManager->destroy();
         }
     };
