@@ -7,6 +7,7 @@
 #include <NordicEngine/Logger/Logger.hpp>
 #include <NordicEngine/Render/Models/Manager.hpp>
 #include <NordicEngine/Settings/Settings.hpp>
+#include <NordicEngine/Render/Manager.hpp>
 
 namespace NordicArts {
     namespace Game {
@@ -19,6 +20,7 @@ namespace NordicArts {
             NordicEngine::WindowMaker::Window       *m_pWindowManager;
             NordicEngine::Logger                    *m_pLogger;
             NordicEngine::Settings                  *m_pSettings;
+            NordicEngine::Render::Manager            *m_pRender;
 
         // Methods
         public:

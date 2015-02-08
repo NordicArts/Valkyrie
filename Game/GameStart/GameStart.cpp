@@ -44,30 +44,35 @@ namespace NordicArts {
                 }
             }
 
+            // Render
+            NordicEngine::Render::Manager oRender(m_pLogger);
+            m_pRender = &oRender;
+
             // Hide the cursor
             m_pWindowManager->setCursorDisabled();
 
             // Clear Color
-            //m_pWindowManager->clearColor(NordicEngine::Color::Blue);
+            m_pRender->clearColor(NordicEngine::Color::Blue);
 
             // Set Depth tests
-            //m_pWindowManager->depthAndCull();
+            m_pRender->depthAndCull();
 
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
-            m_pModelManager->addModel("dragon", "GameFiles/Models/dragon.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            m_pModelManager->addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
             if (m_pWindowManager) {
-                NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("dragon");
+                NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
                 pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
-                    m_pWindowManager->clearWindow();
+                    m_pRender->clear();
 
                     pTriangle->render();
+                    //m_pModelManager->renderAll();
 
                     m_pWindowManager->swapBuffers();
                 }
@@ -75,6 +80,7 @@ namespace NordicArts {
         }
 
         void GameStart::destroy() {
+            m_pRender->destroy();
             m_pWindowManager->destroy();
         }
     };
