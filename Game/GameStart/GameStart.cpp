@@ -78,12 +78,15 @@ namespace NordicArts {
             vVert.z = 0.0f;
             vVerticies.push_back(vVert);
 
-            m_pModelManager->addModel("triangle", vVerticies, "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            //m_pModelManager->addModel("triangle", vVerticies, "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            m_pModelManager->addModel("triange", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
             if (m_pWindowManager) {
                 NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
+                printIt(pTriangle);
+
                 pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
