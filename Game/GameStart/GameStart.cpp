@@ -60,12 +60,32 @@ namespace NordicArts {
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
+            std::vector<glm::vec3> vVerticies;
+            
+            glm::vec3 vVert;
+            vVert.x = -1.0f;
+            vVert.y = -1.0f;
+            vVert.z =  0.0f;
+            vVerticies.push_back(vVert);
+        
+            vVert.x =  1.0f;
+            vVert.y = -1.0f;
+            vVert.z =  0.0f;
+            vVerticies.push_back(vVert);
+    
+            vVert.x = 0.0f;
+            vVert.y = 1.0f;
+            vVert.z = 0.0f;
+            vVerticies.push_back(vVert);
+
+            //m_pModelManager->addModel("triangle", vVerticies, "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
             m_pModelManager->addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
             if (m_pWindowManager) {
                 NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
+                if (pTriangle == nullptr) { return; }
                 pTriangle->initalize();
 
                 while (m_pWindowManager->processInput(true)) {
