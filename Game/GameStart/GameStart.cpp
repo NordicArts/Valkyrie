@@ -19,17 +19,17 @@ namespace NordicArts {
         NordicEngine::WindowMaker::Window *GameStart::getWindowManager() {
             return m_pWindowManager;
         }
-        
+
         void GameStart::setWindowManager(NordicEngine::WindowMaker::Window *pManager) {
             m_pWindowManager = pManager;
         }
 
         // Start the game itself
         int GameStart::startGame() {
-            initalize();
-            gameLoop();
-            destroy();
-            
+            this->initalize();
+            this->gameLoop();
+            this->destroy();
+
             return 0;
         }
 
@@ -60,38 +60,35 @@ namespace NordicArts {
             NordicEngine::Render::Models::Manager oManager(m_pLogger);
             m_pModelManager = &oManager;
 
-            std::vector<glm::vec3> vVerticies;
-            
-            glm::vec3 vVert;
-            vVert.x = -1.0f;
-            vVert.y = -1.0f;
-            vVert.z =  0.0f;
-            vVerticies.push_back(vVert);
-        
-            vVert.x =  1.0f;
-            vVert.y = -1.0f;
-            vVert.z =  0.0f;
-            vVerticies.push_back(vVert);
-    
-            vVert.x = 0.0f;
-            vVert.y = 1.0f;
-            vVert.z = 0.0f;
-            vVerticies.push_back(vVert);
-
-            //m_pModelManager->addModel("triangle", vVerticies, "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
             m_pModelManager->addModel("triangle", "GameFiles/Models/triangle.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
+            m_pModelManager->addModel("dragon", "GameFiles/Models/dragon.obj", "GameFiles/Shaders/Shader.vertex", "GameFiles/Shaders/Shader.fragment");
         }
 
         void GameStart::gameLoop() {
             if (m_pWindowManager) {
                 NordicEngine::Render::Models::Model *pTriangle = m_pModelManager->getModel("triangle");
-                if (pTriangle == nullptr) { return; }
-                pTriangle->initalize();
+                std::cout << "Triangle: " << pTriangle << std::endl;
+
+                pTriangle = NULL;
+                std::cout << "Triangle: " << pTriangle << std::endl;
+
+                if (pTriangle != nullptr) { pTriangle->initalize(); }
+                std::cout << "Triangle: " << pTriangle << std::endl;
+
+                NordicEngine::Render::Models::Model *pDragon = m_pModelManager->getModel("dragon");
+                if (pDragon != nullptr) { pDragon->initalize(); }
+                std::cout << "Stuffs .. " << pDragon << std::endl;
+
+                std::cout << "Models..." << m_pModelManager->m_iModels << std::endl;
+
+                m_pLogger->log(pDragon->getStats());
 
                 while (m_pWindowManager->processInput(true)) {
                     m_pRender->clear();
 
-                    pTriangle->render();
+                    if (pTriangle != nullptr) { pTriangle->render(); }
+                    if (pDragon != nullptr) { pDragon->render(); }
+
                     //m_pModelManager->renderAll();
 
                     m_pWindowManager->swapBuffers();
